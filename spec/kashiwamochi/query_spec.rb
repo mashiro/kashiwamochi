@@ -70,6 +70,11 @@ describe Kashiwamochi::Query do
         let(:keys) { [:name, :test, :created_at, :test, :name] }
         it { should eq 'name ASC, created_at DESC' }
       end
+
+      context 'with [:foo, :bar]' do
+        let(:keys) { [:foo, :bar] }
+        it { should be_nil }
+      end
     end
   end
 end

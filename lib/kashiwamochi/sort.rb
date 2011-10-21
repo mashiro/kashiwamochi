@@ -5,7 +5,7 @@ module Kashiwamochi
   class Sort
     DIRS = {:asc => 'ASC', :desc => 'DESC'}.freeze
 
-    def initialize(key, dir)
+    def initialize(key, dir = nil)
       self.key = key
       self.dir = dir
     end
@@ -26,8 +26,13 @@ module Kashiwamochi
       @dir = Sort.sanitize_dir(value)
     end
 
-    def toggle
+    def toggle!
       @dir = asc? ? DIRS[:desc] : DIRS[:asc]
+      self
+    end
+
+    def toggle
+      self.dup.toggle!
     end
 
     def asc?
@@ -60,7 +65,7 @@ module Kashiwamochi
 
     def self.parse(value)
       key, dir = sanitize(value).split(/\s+/, 2)
-      Sort.new(key, dir)
+      new(key, dir)
     end
   end
 

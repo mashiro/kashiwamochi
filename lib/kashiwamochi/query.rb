@@ -7,11 +7,11 @@ module Kashiwamochi
   class Query
     attr_reader :search_params, :sort_params
 
-    def initialize(attributes, options = {})
+    def initialize(attributes)
       @search_params = []
       @sort_params = []
 
-      sort_key = (options[:sort_key] || Kashiwamochi.config.sort_key).to_s
+      sort_key = Kashiwamochi.config.sort_key.to_s
 
       attributes ||= {}
       attributes.each do |key, value|
@@ -38,21 +38,30 @@ module Kashiwamochi
 
     def sorts_query(*keys)
       sortable = []
-      keys = keys.flatten.map(&:to_s).uniq
-      if keys.empty?
+      allowed_keys = keys.flatten.map(&:to_s).uniq
+
+      if allowed_keys.empty?
         sortable = @sort_params
       else
-        keys.each do |key|
-          sort = @sort_params.find { |p| p.key.to_s == key }
-          sortable << sort if sort
+        allowed_keys.each do |key|
+          sortable << @sort_params.find { |p| p.key.to_s == key }
         end
       end
-      sortable.map(&:to_query).join(', ')
+
+      sortable.compact!
+      sortable.empty? ? nil : sortable.map(&:to_query).join(', ')
     end
-    alias sorts sorts_query
+    alias_method :sorts, :sorts_query
 
     def inspect
       "<Query search: #{@search_params}, sort: #{@sort_params}>"
+    end
+
+    def to_option(*toggle_keys)
+      toggle_keys = toggle_keys.map(&:to_s)
+      hash = Hash[*@search_params.map { |p| [p.key, p.value] }.flatten]
+      hash[Kashiwamochi.config.sort_key] = @sort_params.map { |p| toggle_keys.include?(p.key.to_s) ?  p.toggle : p }.map(&:to_query)
+      hash
     end
   end
 

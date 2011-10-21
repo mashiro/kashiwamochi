@@ -21,6 +21,7 @@ describe Kashiwamochi::Configuration do
       its(:sort_key) { should eq :s }
       its(:form_class) { should eq :search }
       its(:form_method) { should eq :form_for }
+      its(:sort_link_class) { should eq :sort_link }
     end
   end
 end
