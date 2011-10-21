@@ -1,10 +1,6 @@
 require 'active_support'
+require 'kashiwamochi/configuration'
+require 'kashiwamochi/search'
+require 'kashiwamochi/sort'
+require 'kashiwamochi/query'
 require 'kashiwamochi/railtie' if defined?(Rails)
-
-module Kashiwamochi
-  extend ActiveSupport::Autoload
-  autoload :Configuration
-  autoload :Search
-  autoload :Sort
-  autoload :Query
-end
