@@ -80,7 +80,7 @@ describe Kashiwamochi::Sort do
     end
   end
 
-  describe '#parse' do
+  describe '.parse' do
     context "with 'name asc'" do
       subject { Kashiwamochi::Sort.parse('name asc') }
       its(:key) { should eq 'name' }

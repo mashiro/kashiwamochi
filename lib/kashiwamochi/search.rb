@@ -1,7 +1,7 @@
 module Kashiwamochi
 
   class Search
-    attr_accessor :key, :value 
+    attr_reader :key, :value 
 
     def initialize(key, value)
       @key = key

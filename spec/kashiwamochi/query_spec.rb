@@ -25,7 +25,7 @@ describe Kashiwamochi::Query do
       end
 
       context 'missing' do
-        it { lambda { subject.buzz }.should raise_error NoMethodError }
+        its(:buzz) { should be_nil }
       end
 
       context 'alias' do
@@ -36,10 +36,10 @@ describe Kashiwamochi::Query do
     end
   end
 
-  describe '#sorts' do
+  describe '#sorts_query' do
     context 'build with {:s => ["name asc", "  ", "created_at desc"]}' do
       before { @q = Kashiwamochi::Query.new(:s => ["name asc", "  ", "created_at desc"]) }
-      subject { @q.sorts(keys) }
+      subject { @q.sorts_query(keys) }
 
       context 'with empty' do
         let(:keys) { [] }
@@ -61,20 +61,17 @@ describe Kashiwamochi::Query do
         it { should eq 'name ASC, created_at DESC' }
       end
 
-      context 'with [:created_at, :name]' do
-        let(:keys) { [:created_at, :name] }
-        it { should eq 'created_at DESC, name ASC' }
-      end
-
-      context 'with [:name, :test, :created_at, :test, :name]' do
-        let(:keys) { [:name, :test, :created_at, :test, :name] }
-        it { should eq 'name ASC, created_at DESC' }
-      end
-
       context 'with [:foo, :bar]' do
         let(:keys) { [:foo, :bar] }
         it { should be_nil }
       end
+    end
+  end
+
+  describe '#to_option' do
+    context 'build with {:s => ["name asc", "  ", "created_at desc"]}' do
+      before { @q = Kashiwamochi::Query.new(:s => ["name asc", "  ", "created_at desc"]) }
+      subject { @q.sorts_query(keys) }
     end
   end
 end

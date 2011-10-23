@@ -30,17 +30,18 @@ module Kashiwamochi
         default_order = options.delete(:default_order)
 
         attr_name = attribute.to_s
-        sort = query.sort_params.find { |p| p.key.to_s == attr_name }
+        sort = query.sort_params[attr_name] || Kashiwamochi::Sort.new(attr_name, nil)
 
         html_options[:class] = [
           html_options[:class] || "#{attr_name}_#{Kashiwamochi.config.sort_link_class}",
           Kashiwamochi.config.sort_link_class,
-          sort && sort.dir.downcase
+          sort.dir.downcase
         ].compact.join(' ')
 
+        query.sort_params[attr_name] = sort.toggle!
         options[Kashiwamochi.config.search_key] = query.to_option(attr_name)
-        name = args.shift || attr_name
 
+        name = args.shift || attr_name
         link_to(name, url_for(options), html_options)
       end
       alias_method :sort_link_to, :search_sort_link_to unless defined?(sort_link_to)
