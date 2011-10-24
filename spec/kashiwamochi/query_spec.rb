@@ -43,22 +43,22 @@ describe Kashiwamochi::Query do
 
       context 'with empty' do
         let(:keys) { [] }
-        it { should eq 'name ASC, created_at DESC' }
+        it { should eq 'name asc, created_at desc' }
       end
 
       context 'with :name' do
         let(:keys) { [:name] }
-        it { should eq 'name ASC' }
+        it { should eq 'name asc' }
       end
 
       context 'with :created_at' do
         let(:keys) { [:created_at] }
-        it { should eq 'created_at DESC' }
+        it { should eq 'created_at desc' }
       end
 
       context 'with [:name, :created_at]' do
         let(:keys) { [:name, :created_at] }
-        it { should eq 'name ASC, created_at DESC' }
+        it { should eq 'name asc, created_at desc' }
       end
 
       context 'with [:foo, :bar]' do
@@ -69,9 +69,9 @@ describe Kashiwamochi::Query do
   end
 
   describe '#to_option' do
-    context 'build with {:s => ["name asc", "  ", "created_at desc"]}' do
-      before { @q = Kashiwamochi::Query.new(:s => ["name asc", "  ", "created_at desc"]) }
-      subject { @q.sorts_query(keys) }
-    end
+    before { @q = Kashiwamochi::Query.new(:name => 'aira', :s => ["created_at desc"]) }
+    subject { @q.to_option }
+    it { should be_an_instance_of Hash }
+    it { should eq ({:name => 'aira', :s => ['created_at desc']}) }
   end
 end

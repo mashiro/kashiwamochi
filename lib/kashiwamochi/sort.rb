@@ -3,7 +3,7 @@ require 'active_support/core_ext'
 module Kashiwamochi
 
   class Sort
-    DIRS = {:asc => 'ASC', :desc => 'DESC'}.freeze
+    DIRS = {:asc => 'asc', :desc => 'desc'}.freeze
 
     def initialize(key, dir = nil)
       self.key = key
@@ -60,7 +60,7 @@ module Kashiwamochi
     end
 
     def self.sanitize_dir(dir)
-      sanitize(dir).upcase != DIRS[:desc] ? DIRS[:asc] : DIRS[:desc]
+      sanitize(dir).downcase != DIRS[:desc] ? DIRS[:asc] : DIRS[:desc]
     end
 
     def self.parse(value)
