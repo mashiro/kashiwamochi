@@ -47,6 +47,7 @@ end
 = search_form_for @q, :form_method => :simple_form_for do |f|
   = f.input :name
   = f.button :submit
+```
 
 ## Copyright
 
