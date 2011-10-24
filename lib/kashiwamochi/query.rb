@@ -66,7 +66,6 @@ module Kashiwamochi
     alias_method :sorts, :sorts_query
 
     def to_option
-      toggle_keys = toggle_keys.map(&:to_s)
       hash = Hash[*@search_params.values.map { |search| [search.key, search.value] }.flatten]
       hash[Kashiwamochi.config.sort_key] = @sort_params.values.map(&:to_query)
       hash
