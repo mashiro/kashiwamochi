@@ -5,25 +5,26 @@
 
 Gem::Specification.new do |s|
   s.name = "kashiwamochi"
-  s.version = "0.1.0"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["mashiro"]
-  s.date = "2011-10-21"
+  s.date = "2011-10-25"
   s.description = "Minimal searchng extension for Rails 3"
   s.email = "mail@mashiro.org"
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
     ".document",
     ".rspec",
     "Gemfile",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     "VERSION",
+    "kashiwamochi.gemspec",
     "lib/kashiwamochi.rb",
     "lib/kashiwamochi/action_view_extension.rb",
     "lib/kashiwamochi/configuration.rb",

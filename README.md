@@ -14,7 +14,7 @@ gem 'kashiwamochi', :git => 'git://github.com/mashiro/kashiwamochi.git'
 
 ```ruby
 def index
-  @q = Kashiwamochi::Query.new(params[:user])
+  @q = Kashiwamochi::Query.new(params[:q])
   @users = User.where(:name => @q.name)
 end
 
