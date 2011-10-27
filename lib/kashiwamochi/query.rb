@@ -80,4 +80,8 @@ module Kashiwamochi
     end
   end
 
+  def self.build(attributes)
+    Query.new attributes
+  end
+
 end

@@ -74,4 +74,10 @@ describe Kashiwamochi::Query do
     it { should be_an_instance_of Hash }
     it { should eq ({:name => 'aira', :s => ['created_at desc']}) }
   end
+
+  describe '#build' do
+    subject { Kashiwamochi.build(:name => 'rizumu') }
+    it { should be_an_instance_of Kashiwamochi::Query }
+    its(:name) { should eq 'rizumu' }
+  end
 end
