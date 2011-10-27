@@ -21,7 +21,7 @@ end
 # when use before_filter
 before_filter :build_query, :only => [:index]
 def build_query
-  @q = Kashiwamochi::Query.new(params[:user])
+  @q = Kashiwamochi.build(params[:user])
 end
 ```
 
