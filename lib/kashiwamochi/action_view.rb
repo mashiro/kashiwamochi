@@ -1,5 +1,5 @@
 module Kashiwamochi
-  module ActionViewExtension
+  module ActionView
     extend ActiveSupport::Concern
 
     module InstanceMethods

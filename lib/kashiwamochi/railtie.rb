@@ -1,14 +1,14 @@
-require 'kashiwamochi/action_controller_extension'
-require 'kashiwamochi/action_view_extension'
+require 'kashiwamochi/action_controller'
+require 'kashiwamochi/action_view'
 
 module Kashiwamochi
   class Railtie < Rails::Railtie
     initializer 'kashiwamochi.initialize' do
       ActiveSupport.on_load(:action_controller) do
-        include Kashiwamochi::ActionControllerExtension
+        include Kashiwamochi::ActionController
       end
       ActiveSupport.on_load(:action_view) do
-        include Kashiwamochi::ActionViewExtension
+        include Kashiwamochi::ActionView
       end
     end
   end
