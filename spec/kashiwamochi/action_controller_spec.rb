@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'action_controller/railtie'
 
-include Kashiwamochi::ActionControllerExtension
+include Kashiwamochi::ActionController
 
-describe Kashiwamochi::ActionControllerExtension do
+describe Kashiwamochi::ActionController do
   describe '#build_search_query' do
     before do
       instance_eval <<-EOS
