@@ -5,7 +5,8 @@ Kashiwamochi is a minimal searching extension for Rails 3.
 ## Installation
 
 ```ruby
-gem 'kashiwamochi', :git => 'git://github.com/mashiro/kashiwamochi.git'
+gem 'kashiwamochi'
+# gem 'kashiwamochi', :git => 'git://github.com/mashiro/kashiwamochi.git'
 ```
 
 ## Getting started
@@ -13,16 +14,15 @@ gem 'kashiwamochi', :git => 'git://github.com/mashiro/kashiwamochi.git'
 ### In your controllers
 
 ```ruby
+# use before_filter.
+before_filter :build_query!, :only => [:index]
+
+# or write directly.
 def index
   @q = Kashiwamochi.build(params[:q])
   @users = User.where(:name => @q.name)
 end
 
-# when use before_filter
-before_filter :build_query, :only => [:index]
-def build_query
-  @q = Kashiwamochi.build(params[:q])
-end
 ```
 
 ### In your views
@@ -37,16 +37,35 @@ end
 %table
   %thead
     %tr
-      %th= sort_link_to @q, :name, 'Name'
+      %th= sort_link_to @q, :name, 'User name'
   %tbody
     ...
 ```
 
 #### With simple_form
+
 ```ruby
 = search_form_for @q, :form_method => :simple_form_for do |f|
   = f.input :name
   = f.button :submit
+```
+
+### CSS
+
+```css
+// Show the sort direction.
+.sort_link {
+    display: block;
+    width: 100%;
+    color: $grayDark;
+
+    &.asc:after {
+      content: " \25b2";
+    }   
+    &.desc:after {
+      content: " \25bc";
+    }   
+}
 ```
 
 ## Copyright
