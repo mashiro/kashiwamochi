@@ -1,5 +1,7 @@
 # kashiwamochi
 
+[![Build Status](https://secure.travis-ci.org/mashiro/kashiwamochi.png)](http://travis-ci.org/mashiro/kashiwamochi)
+
 Kashiwamochi is a minimal searching extension for Rails 3.
 
 ## Installation
