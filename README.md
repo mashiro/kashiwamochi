@@ -55,10 +55,6 @@ end
 ```css
 // Show the sort direction.
 .sort_link {
-    display: block;
-    width: 100%;
-    color: $grayDark;
-
     &.asc:after {
       content: " \25b2";
     }   
