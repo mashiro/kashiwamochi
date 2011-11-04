@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "kashiwamochi"
-  s.version = "0.1.3"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["mashiro"]
-  s.date = "2011-10-27"
+  s.date = "2011-11-04"
   s.description = "Minimal searchng extension for Rails 3"
   s.email = "mail@mashiro.org"
   s.extra_rdoc_files = [
@@ -26,13 +26,16 @@ Gem::Specification.new do |s|
     "VERSION",
     "kashiwamochi.gemspec",
     "lib/kashiwamochi.rb",
-    "lib/kashiwamochi/action_view_extension.rb",
+    "lib/kashiwamochi/action_controller.rb",
+    "lib/kashiwamochi/action_view.rb",
     "lib/kashiwamochi/configuration.rb",
     "lib/kashiwamochi/query.rb",
     "lib/kashiwamochi/railtie.rb",
     "lib/kashiwamochi/search.rb",
     "lib/kashiwamochi/sort.rb",
-    "spec/kashiwamochi/action_view_extension_spec.rb",
+    "spec/fake_app.rb",
+    "spec/helpers/action_view_spec.rb",
+    "spec/kashiwamochi/action_controller_spec.rb",
     "spec/kashiwamochi/config_spec.rb",
     "spec/kashiwamochi/query_spec.rb",
     "spec/kashiwamochi/sort_spec.rb",
@@ -49,23 +52,32 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<railties>, ["~> 3.0"])
-      s.add_development_dependency(%q<rspec>, [">= 0"])
-      s.add_development_dependency(%q<bundler>, [">= 0"])
-      s.add_development_dependency(%q<jeweler>, [">= 0"])
-      s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<activerecord>, ["~> 3.0"])
+      s.add_development_dependency(%q<sqlite3>, ["~> 1.3.4"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.7.0"])
+      s.add_development_dependency(%q<rspec-rails>, ["~> 2.7.0"])
+      s.add_development_dependency(%q<bundler>, ["~> 1.0.11"])
+      s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
+      s.add_development_dependency(%q<rcov>, ["~> 0.9.11"])
     else
       s.add_dependency(%q<railties>, ["~> 3.0"])
-      s.add_dependency(%q<rspec>, [">= 0"])
-      s.add_dependency(%q<bundler>, [">= 0"])
-      s.add_dependency(%q<jeweler>, [">= 0"])
-      s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<activerecord>, ["~> 3.0"])
+      s.add_dependency(%q<sqlite3>, ["~> 1.3.4"])
+      s.add_dependency(%q<rspec>, ["~> 2.7.0"])
+      s.add_dependency(%q<rspec-rails>, ["~> 2.7.0"])
+      s.add_dependency(%q<bundler>, ["~> 1.0.11"])
+      s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
+      s.add_dependency(%q<rcov>, ["~> 0.9.11"])
     end
   else
     s.add_dependency(%q<railties>, ["~> 3.0"])
-    s.add_dependency(%q<rspec>, [">= 0"])
-    s.add_dependency(%q<bundler>, [">= 0"])
-    s.add_dependency(%q<jeweler>, [">= 0"])
-    s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<activerecord>, ["~> 3.0"])
+    s.add_dependency(%q<sqlite3>, ["~> 1.3.4"])
+    s.add_dependency(%q<rspec>, ["~> 2.7.0"])
+    s.add_dependency(%q<rspec-rails>, ["~> 2.7.0"])
+    s.add_dependency(%q<bundler>, ["~> 1.0.11"])
+    s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
+    s.add_dependency(%q<rcov>, ["~> 0.9.11"])
   end
 end
 
