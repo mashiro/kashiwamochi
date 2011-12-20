@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Kashiwamochi::VERSION
   s.authors     = ["mashiro"]
   s.email       = ["mail@mashiro.org"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/mashiro/kashiwamochi"
   s.summary     = %q{Minimal searchng extension for Rails 3}
   s.description = %q{Searching form and sorting query builder}
 
