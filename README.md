@@ -55,7 +55,7 @@ end
 ### CSS
 
 ```css
-// Show the sort direction.
+/* Show the sort direction. */
 .sort_link.asc:after  { content: " \25b2"; }   
 .sort_link.desc:after { content: " \25bc"; }   
 ```
