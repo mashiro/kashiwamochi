@@ -85,8 +85,4 @@ module Kashiwamochi
       false
     end
   end
-
-  def self.build(attributes)
-    Query.new attributes
-  end
 end

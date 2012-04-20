@@ -17,14 +17,4 @@ module Kashiwamochi
       config.sort_link_class = :sort_link
     end
   end
-
-  class << self
-    def config
-      @config ||= Kashiwamochi::Configuration.new
-    end
-
-    def configure
-      yield config
-    end 
-  end
 end

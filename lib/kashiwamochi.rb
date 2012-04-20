@@ -1,4 +1,5 @@
 require "kashiwamochi/version"
+require 'kashiwamochi/railtie' if defined?(Rails)
 
 module Kashiwamochi
   autoload :Configuration, 'kashiwamochi/configuration'
@@ -6,5 +7,17 @@ module Kashiwamochi
   autoload :Sort,          'kashiwamochi/sort'
   autoload :Query,         'kashiwamochi/query'
 
-  require 'kashiwamochi/railtie' if defined?(Rails)
+  class << self
+    def config
+      @config ||= Kashiwamochi::Configuration.new
+    end
+
+    def configure
+      yield config
+    end 
+
+    def build(attributes)
+      Query.new attributes
+    end
+  end
 end
