@@ -1,19 +1,15 @@
-require 'kashiwamochi/configuration'
-require 'kashiwamochi/search'
-require 'kashiwamochi/sort'
+require 'active_support/ordered_hash'
 
 module Kashiwamochi
-
   class Query
     attr_accessor :search_params, :sort_params
 
-    def initialize(attributes)
+    def initialize(attributes = {})
       @search_params = ActiveSupport::OrderedHash.new.with_indifferent_access
       @sort_params = ActiveSupport::OrderedHash.new.with_indifferent_access
 
       sort_key = Kashiwamochi.config.sort_key.to_s
 
-      attributes ||= {}
       attributes.each do |key, value|
         if key.to_s == sort_key
           add_sort_param(key, value)
@@ -46,6 +42,16 @@ module Kashiwamochi
         @sort_params[sort.key] = sort if sort.valid?
       end
     end
+
+    def respond_to?(method_id, include_private = false)
+      super || respond_to_missing?(method_id, include_private)
+    end
+
+    def respond_to_missing?(method_id, include_private)
+      method_name = method_id.to_s
+      return true if method_name =~ /(.+)=$/
+      super
+    end 
 
     def method_missing(method_id, *args, &block)
       method_name = method_id.to_s
@@ -83,5 +89,4 @@ module Kashiwamochi
   def self.build(attributes)
     Query.new attributes
   end
-
 end

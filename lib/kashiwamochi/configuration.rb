@@ -1,12 +1,6 @@
+require 'active_support/configurable'
+
 module Kashiwamochi
-  def self.config
-    @config ||= Kashiwamochi::Configuration.new
-  end
-
-  def self.configure
-    yield config
-  end 
-
   class Configuration
     include ActiveSupport::Configurable
     config_accessor :search_key
@@ -22,5 +16,15 @@ module Kashiwamochi
       config.form_method = :form_for
       config.sort_link_class = :sort_link
     end
+  end
+
+  class << self
+    def config
+      @config ||= Kashiwamochi::Configuration.new
+    end
+
+    def configure
+      yield config
+    end 
   end
 end

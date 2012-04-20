@@ -1,5 +1,4 @@
 module Kashiwamochi
-
   class Search
     attr_reader :key, :value 
 
@@ -12,5 +11,4 @@ module Kashiwamochi
       "#<Search #{key}: #{value}>"
     end
   end
-
 end

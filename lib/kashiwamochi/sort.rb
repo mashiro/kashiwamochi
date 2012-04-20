@@ -1,7 +1,4 @@
-require 'active_support/core_ext'
-
 module Kashiwamochi
-
   class Sort
     DIRS = {:asc => 'asc', :desc => 'desc'}.freeze
 
@@ -68,5 +65,4 @@ module Kashiwamochi
       new(key, dir)
     end
   end
-
 end

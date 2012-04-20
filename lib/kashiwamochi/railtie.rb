@@ -1,5 +1,5 @@
-require 'kashiwamochi/action_controller'
 require 'kashiwamochi/action_view'
+require 'kashiwamochi/action_controller'
 
 module Kashiwamochi
   class Railtie < Rails::Railtie
