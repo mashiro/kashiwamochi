@@ -41,7 +41,7 @@ module Kashiwamochi
     end
 
     def valid?
-      @key.present?
+      !@key.empty?
     end
 
     def to_query
@@ -53,6 +53,7 @@ module Kashiwamochi
     end
 
     def self.sanitize(value)
+      value = value.first if value.is_a?(Array)
       value.to_s.strip
     end
 
