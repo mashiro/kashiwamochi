@@ -3,17 +3,19 @@ require 'active_support/core_ext/hash/indifferent_access'
 
 module Kashiwamochi
   class Query
-    attr_accessor :search_params, :sort_param
+    attr_accessor :search_params, :sort_params
 
     def initialize(attributes = {})
-      attributes = attributes.dup
-      attributes.with_indifferent_access
-
       @search_params = ActiveSupport::OrderedHash.new.with_indifferent_access
-      @sort_param = Sort.parse(attributes.delete(Kashiwamochi.config.sort_key))
+      @sort_params = ActiveSupport::OrderedHash.new.with_indifferent_access
+      sort_key = Kashiwamochi.config.sort_key.to_s
 
       attributes.each do |key, value|
-        add_search_param(key, value)
+        if key.to_s == sort_key
+          add_sort_param key, value
+        else
+          add_search_param key, value
+        end
       end
     end
 
@@ -31,6 +33,14 @@ module Kashiwamochi
 
       search = Search.new(key, value)
       @search_params[search.key] = search
+    end
+
+    def add_sort_param(key, value)
+      values = Array(value)
+      values.each do |v|
+        sort = Sort.parse(v)
+        @sort_params[sort.key] = sort if sort.valid?
+      end
     end
 
     def respond_to?(method_id, include_private = false)
@@ -52,24 +62,44 @@ module Kashiwamochi
       end
     end
 
-    def sort_query(*keys)
-      allowed_keys = keys.flatten.map(&:to_s).uniq
-      if allowed_keys.empty? || allowed_keys.include?(@sort_param.key.to_s)
-        @sort_param.to_query
-      else
-        nil
-      end
-    end
-    alias_method :sort, :sort_query
+    def sorts_query(*keys)
+      options = keys.extract_options!
 
-    def to_option
+      allowed_keys = keys.flatten.map(&:to_s).uniq
+      allowed_sorts = []
+
+      unless allowed_keys.empty?
+        if options[:unordered]
+          allowed_sorts = @sort_params.values
+          allowed_sorts.reject! { |s| !allowed_keys.include?(s.key.to_s) }
+        else
+          allowed_keys.each { |key| allowed_sorts << @sort_params[key] if @sort_params.key? key }
+        end
+      else
+        allowed_sorts = @sort_params.values
+      end
+
+      allowed_sorts.empty? ? nil : allowed_sorts.map(&:to_query).join(', ')
+    end
+    alias_method :sorts, :sorts_query
+
+    def to_option(*sort_keys)
+      sort_keys = sort_keys.flatten.map(&:to_s).uniq
+      sorts = @sort_params.values
+      sorts.reject! { |s| !sort_keys.include?(s.key.to_s) } unless sort_keys.empty?
+
       hash = Hash[*@search_params.values.map { |search| [search.key, search.value] }.flatten]
-      hash[Kashiwamochi.config.sort_key] = @sort_param.to_query
+      unless sorts.empty?
+        hash[Kashiwamochi.config.sort_key] = case sorts.length
+                                             when 1 then sorts.first.to_query
+                                             else        sorts.map(&:to_query)
+                                             end
+      end
       hash
     end
 
     def inspect
-      "<Query search: #{@search_params}, sort: #{@sort_param}>"
+      "<Query search: #{@search_params}, sort: #{@sort_params}>"
     end
 
     def persisted?

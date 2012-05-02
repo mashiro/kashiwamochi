@@ -27,23 +27,22 @@ module Kashiwamochi
       html_options = options.delete(:html_options) || {}
       default_order = options.delete(:default_order)
 
-      query = query.dup
       attr_name = attribute.to_s
-      current_sort = query.sort_param
+      current_sort = query.sort_params[attr_name]
 
       classes = []
       classes << (html_options[:class] || "#{attr_name}_#{Kashiwamochi.config.sort_link_class}")
       classes << Kashiwamochi.config.sort_link_class
 
-      if current_sort.valid? && current_sort.key.to_s == attr_name
+      if current_sort
         classes << current_sort.dir.downcase
-        query.sort_param = current_sort.toggle
+        query.sort_params[attr_name] = current_sort.toggle
       else
-        query.sort_param = Kashiwamochi::Sort.new(attr_name, default_order)
+        query.sort_params[attr_name] = Kashiwamochi::Sort.new(attr_name, default_order)
       end
 
       html_options[:class] = classes.compact.join(' ')
-      options[Kashiwamochi.config.search_key] = query.to_option
+      options[Kashiwamochi.config.search_key] = query.to_option(attr_name)
 
       name = args.shift || attr_name
       link_to(name, options, html_options)
