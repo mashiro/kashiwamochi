@@ -2,15 +2,37 @@ require 'spec_helper'
 
 describe Kashiwamochi::ActionView do
   describe '#search_form_for' do
+    def with_concat_form_for(*args, &block)
+      concat helper.search_form_for(*args, &(block || proc {}))
+    end
+
     before do
       @q = Kashiwamochi::Query.new(:name => 'test', :s => 'name desc')
-      helper.search_form_for @q, :url => {:controller => 'users', :action => 'index'} do |f|
-        @f = f
-      end
     end
-    subject { @f }
 
-    it { should be_an_instance_of ActionView::Helpers::FormBuilder }
+    describe 'instance of' do
+      before do
+        helper.search_form_for @q, :url => {:controller => 'users', :action => 'index'} do |f|
+          @f = f
+        end
+      end
+      subject { @f }
+      it { should be_an_instance_of ActionView::Helpers::FormBuilder }
+    end
+
+    describe 'default id and class' do
+      before { @buffer = with_concat_form_for(@q, :url => '/') }
+      subject { @buffer }
+      it { should match %r(id="q_search") }
+      it { should match %r(class="search") }
+    end
+
+    describe 'user id and class' do
+      before { @buffer = with_concat_form_for(@q, :url => '/', :html => {:id => 'aaa', :class => 'bbb'}) }
+      subject { @buffer }
+      it { should match %r(id="aaa") }
+      it { should match %r(class="search bbb") }
+    end
   end
 
   describe '#search_sort_link_to' do

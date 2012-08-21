@@ -3,7 +3,7 @@ require 'active_support/core_ext/hash/indifferent_access'
 
 module Kashiwamochi
   class Query
-    attr_accessor :search_params, :sort_params
+    attr_reader :search_params, :sort_params
 
     def initialize(attributes = {})
       @search_params = ActiveSupport::OrderedHash.new.with_indifferent_access

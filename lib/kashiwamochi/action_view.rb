@@ -8,18 +8,13 @@ module Kashiwamochi
       options[:url] ||= url_for
       options[:as] ||= Kashiwamochi.config.search_key
       options[:method] ||= :get
-      options[:html] ||= {}
-      options[:html].tap do |html|
-        html[:id] ||= "#{options[:as]}_#{Kashiwamochi.config.form_class}"
-        html[:class] = [
-          html[:class] || "#{options[:as]}_#{Kashiwamochi.config.form_class}",
-          "#{Kashiwamochi.config.form_class}"
-        ].compact.join(' ')
-        html[:method] ||= :get
-      end
+
+      html_options = options[:html] ||= {}
+      html_options[:id] ||= "#{options[:as]}_#{Kashiwamochi.config.form_class}"
+      html_options[:class] = [Kashiwamochi.config.form_class, html_options[:class]].compact.join(' ')
 
       form_method = options.delete(:form_method) || Kashiwamochi.config.form_method
-      send(form_method, query, *(args << options), &block)
+      __send__(form_method, query, *(args << options), &block)
     end
 
     def search_sort_link_to(query, attribute, *args)
