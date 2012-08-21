@@ -90,6 +90,20 @@ describe Kashiwamochi::Query do
     end
   end
 
+  describe '#searched?' do
+    context 'with query' do
+      before { @q = Kashiwamochi::Query.new(:name => 'aira', :s => ["created_at desc"]) }
+      subject { @q }
+      it { should be_searched }
+    end
+
+    context 'without query' do
+      before { @q = Kashiwamochi::Query.new }
+      subject { @q }
+      it { should_not be_searched }
+    end
+  end
+
   describe '#to_option' do
     before { @q = Kashiwamochi::Query.new(:name => 'aira', :s => ["created_at desc"]) }
     subject { @q.to_option }

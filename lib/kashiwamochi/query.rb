@@ -105,5 +105,9 @@ module Kashiwamochi
     def persisted?
       false
     end
+
+    def searched?
+      !@search_params.empty? || !@sort_params.empty?
+    end
   end
 end
