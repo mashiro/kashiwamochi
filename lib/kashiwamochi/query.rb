@@ -6,8 +6,8 @@ module Kashiwamochi
     attr_reader :search_params, :sort_params
 
     def initialize(attributes = {})
-      @search_params = ActiveSupport::OrderedHash.new.with_indifferent_access
-      @sort_params = ActiveSupport::OrderedHash.new.with_indifferent_access
+      @search_params = {}.with_indifferent_access
+      @sort_params = {}.with_indifferent_access
       sort_key = Kashiwamochi.config.sort_key.to_s
 
       attributes.each do |key, value|
