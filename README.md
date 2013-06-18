@@ -15,6 +15,7 @@ gem 'kashiwamochi'
 
 ### In your controllers
 
+#### Build query
 ```ruby
 # use before_filter.
 before_filter :build_query!, :only => [:index]
@@ -22,9 +23,18 @@ before_filter :build_query!, :only => [:index]
 # or write directly.
 def index
   @q = Kashiwamochi.build(params[:q])
-  @users = User.where(:name => @q.name)
 end
+```
 
+#### Use query
+```ruby
+# basic
+@users = User.where(:name => @q.name)
+             .order(@q.sorts(:age))
+
+# mapped order
+@users = User.where(:name => @q.name)
+             .order(@q.sorts(:age => 'years'))
 ```
 
 ### In your views
