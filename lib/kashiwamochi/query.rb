@@ -62,24 +62,25 @@ module Kashiwamochi
       end
     end
 
-    def sorts_query(*keys)
-      options = keys.extract_options!
-
-      allowed_keys = keys.flatten.map(&:to_s).uniq
-      allowed_sorts = []
-
-      unless allowed_keys.empty?
-        if options[:unordered]
-          allowed_sorts = @sort_params.values
-          allowed_sorts.reject! { |s| !allowed_keys.include?(s.key.to_s) }
-        else
-          allowed_keys.each { |key| allowed_sorts << @sort_params[key] if @sort_params.key? key }
-        end
+    def sorts_query(*args)
+      if args.first.is_a? Hash
+        params = args.first
       else
-        allowed_sorts = @sort_params.values
+        params = Hash[*args.map { |v| [v, v] }.flatten]
       end
 
-      allowed_sorts.empty? ? nil : allowed_sorts.map(&:to_query).join(', ')
+      params.stringify_keys!
+      allowed_sorts = []
+
+      if params.empty?
+        allowed_sorts = @sort_params.values
+      else
+        allowed_sorts = params.keys.map { |k| @sort_params[k] }
+        allowed_sorts.reject! { |s| s.nil? }
+      end
+
+      return nil if allowed_sorts.empty?
+      allowed_sorts.map { |s| s.to_query(params[s.key]) }.join(', ')
     end
     alias_method :sorts, :sorts_query
 

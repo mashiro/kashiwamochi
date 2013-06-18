@@ -40,7 +40,7 @@ describe Kashiwamochi::Query do
     context "build with {:s => ['name asc', '  ', 'created_at desc']}" do
       context 'default' do
         before { @q = Kashiwamochi::Query.new(:s => ['name asc', '  ', 'created_at desc']) }
-        subject { @q.sorts_query(keys) }
+        subject { @q.sorts_query(*keys) }
 
         context 'with empty' do
           let(:keys) { [] }
@@ -73,18 +73,18 @@ describe Kashiwamochi::Query do
         end
       end
 
-      context 'unordered' do
+      context 'mapping' do
         before { @q = Kashiwamochi::Query.new(:s => ['name asc', '  ', 'created_at desc']) }
-        subject { @q.sorts_query(keys, :unordered => true) }
+        subject { @q.sorts_query(*keys) }
 
-        context 'with [:name, :created_at]' do
-          let(:keys) { [:name, :created_at] }
-          it { should eq 'name asc, created_at desc' }
+        context "with :name => 'mapped_name'" do
+          let(:keys) { {:name => 'mapped_name'} }
+          it { should eq 'mapped_name asc' }
         end
 
-        context 'with [:created_at, :name]' do
-          let(:keys) { [:created_at, :name] }
-          it { should eq 'name asc, created_at desc' }
+        context "with :created_at => 'mapped_created_at', :name => 'mapped_name'" do
+          let(:keys) { {:created_at => 'mapped_created_at', :name => 'mapped_name'} }
+          it { should eq 'mapped_created_at desc, mapped_name asc' }
         end
       end
     end

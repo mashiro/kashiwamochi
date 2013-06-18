@@ -44,8 +44,8 @@ module Kashiwamochi
       !@key.empty?
     end
 
-    def to_query
-      "#{key} #{dir}"
+    def to_query(map = nil)
+      "#{map || key} #{dir}"
     end
 
     def inspect
