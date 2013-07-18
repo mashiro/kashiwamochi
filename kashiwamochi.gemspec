@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors     = ["mashiro"]
   s.email       = ["mail@mashiro.org"]
   s.homepage    = "https://github.com/mashiro/kashiwamochi"
-  s.summary     = %q{Minimal searchng extension for Rails 3}
+  s.summary     = %q{Minimal searchng extension for Rails 3 and 4}
   s.description = %q{Searching form and sorting query builder}
 
   s.rubyforge_project = "kashiwamochi"
@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency "railties", "~> 4.0"
-  s.add_development_dependency "activerecord", "~> 4.0"
+  s.add_dependency "railties", ">= 3.0"
+  s.add_development_dependency "activerecord", ">= 3.0"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec"
