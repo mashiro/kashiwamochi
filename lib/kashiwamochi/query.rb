@@ -89,7 +89,7 @@ module Kashiwamochi
       sorts = @sort_params.values
       sorts.reject! { |s| !sort_keys.include?(s.key.to_s) } unless sort_keys.empty?
 
-      hash = Hash[*@search_params.values.map { |search| [search.key, search.value] }.flatten]
+      hash = Hash[@search_params.values.map { |search| [search.key, search.value] }]
       unless sorts.empty?
         hash[Kashiwamochi.config.sort_key] = case sorts.length
                                              when 1 then sorts.first.to_query

@@ -105,10 +105,10 @@ describe Kashiwamochi::Query do
   end
 
   describe '#to_option' do
-    before { @q = Kashiwamochi::Query.new(:name => 'aira', :s => ["created_at desc"]) }
+    before { @q = Kashiwamochi::Query.new(:name => 'aira', :ids => [1, 2, 3], :s => ["created_at desc"]) }
     subject { @q.to_option }
     it { should be_an_instance_of Hash }
-    it { should eq ({:name => 'aira', :s => 'created_at desc'}) }
+    it { should eq ({:name => 'aira', :ids => [1, 2, 3], :s => 'created_at desc'}) }
   end
 
   describe '#build' do
