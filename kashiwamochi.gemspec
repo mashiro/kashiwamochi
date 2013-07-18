@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/mashiro/kashiwamochi"
   s.summary     = %q{Minimal searchng extension for Rails 3 and 4}
   s.description = %q{Searching form and sorting query builder}
+  s.license     = "MIT"
 
   s.rubyforge_project = "kashiwamochi"
 
